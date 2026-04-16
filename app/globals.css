@@ -2,49 +2,95 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Amazon-Inspired Light Theme */
 :root {
-  --background: hsl(0 0% 100%);
-  --foreground: hsl(240 10% 3.9%);
-  --card: hsl(0 0% 100%);
-  --card-foreground: hsl(240 10% 3.9%);
+  /* Backgrounds */
+  --background: hsl(0 0% 98%); /* Light gray #f5f5f5 */
+  --card: hsl(0 0% 100%); /* White */
   --popover: hsl(0 0% 100%);
-  --popover-foreground: hsl(240 10% 3.9%);
-  --primary: hsl(240 5.9% 10%); /* High-end professional black/zinc */
-  --primary-foreground: hsl(0 0% 98%);
-  --secondary: hsl(240 4.8% 95.9%);
-  --secondary-foreground: hsl(240 5.9% 10%);
-  --muted: hsl(240 4.8% 95.9%);
-  --muted-foreground: hsl(240 3.8% 46.1%);
-  --accent: hsl(240 4.8% 95.9%);
-  --accent-foreground: hsl(240 5.9% 10%);
+  --input: hsl(0 0% 95%); /* Very light gray for inputs */
+  
+  /* Foreground / Text */
+  --foreground: hsl(220 13% 12%); /* Dark navy #131921 - Amazon header color */
+  --card-foreground: hsl(220 13% 12%);
+  --popover-foreground: hsl(220 13% 12%);
+  
+  /* Primary / Header */
+  --primary: hsl(220 13% 12%); /* Dark blue/navy header */
+  --primary-foreground: hsl(0 0% 100%);
+  
+  /* Secondary */
+  --secondary: hsl(0 0% 95%); /* Light gray */
+  --secondary-foreground: hsl(220 13% 12%);
+  
+  /* Accent - Amazon Orange */
+  --accent: hsl(35 100% 50%); /* Amazon Orange #FF9900 */
+  --accent-foreground: hsl(220 13% 12%);
+  
+  /* Muted */
+  --muted: hsl(0 0% 90%);
+  --muted-foreground: hsl(220 5% 50%);
+  
+  /* Destructive */
   --destructive: hsl(0 84.2% 60.2%);
   --destructive-foreground: hsl(0 0% 98%);
-  --border: hsl(240 5.9% 90%);
-  --input: hsl(240 5.9% 90%);
-  --ring: hsl(240 5.9% 10%);
-  --radius: 0.5rem;
+  
+  /* Border & Ring */
+  --border: hsl(0 0% 90%);
+  --ring: hsl(35 100% 50%); /* Orange for focus ring */
+  
+  /* Radius */
+  --radius: 0.375rem;
+  
+  /* Amazon-specific shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --shadow-hover: 0 20px 25px rgba(0, 0, 0, 0.15);
 }
 
+/* Amazon-Inspired Dark Theme */
 .dark {
-  --background: hsl(240 10% 3.9%);
-  --foreground: hsl(0 0% 98%);
-  --card: hsl(240 10% 3.9%);
-  --card-foreground: hsl(0 0% 98%);
-  --popover: hsl(240 10% 3.9%);
-  --popover-foreground: hsl(0 0% 98%);
-  --primary: hsl(0 0% 98%);
-  --primary-foreground: hsl(240 5.9% 10%);
-  --secondary: hsl(240 3.7% 15.9%);
-  --secondary-foreground: hsl(0 0% 98%);
-  --muted: hsl(240 3.7% 15.9%);
-  --muted-foreground: hsl(240 5% 64.9%);
-  --accent: hsl(240 3.7% 15.9%);
-  --accent-foreground: hsl(0 0% 98%);
-  --destructive: hsl(0 62.8% 30.6%);
+  /* Backgrounds */
+  --background: hsl(220 13% 8%); /* Very dark blue #0f1419 */
+  --card: hsl(220 13% 12%); /* Slightly lighter #1a1f2b */
+  --popover: hsl(220 13% 12%);
+  --input: hsl(220 13% 16%); /* Slightly lighter for inputs */
+  
+  /* Foreground / Text */
+  --foreground: hsl(0 0% 93%); /* Off-white #ededed */
+  --card-foreground: hsl(0 0% 93%);
+  --popover-foreground: hsl(0 0% 93%);
+  
+  /* Primary */
+  --primary: hsl(0 0% 93%);
+  --primary-foreground: hsl(220 13% 12%);
+  
+  /* Secondary */
+  --secondary: hsl(220 13% 18%);
+  --secondary-foreground: hsl(0 0% 93%);
+  
+  /* Accent - Muted Amazon Orange */
+  --accent: hsl(35 100% 55%); /* Slightly lighter orange in dark mode */
+  --accent-foreground: hsl(220 13% 12%);
+  
+  /* Muted */
+  --muted: hsl(220 13% 25%);
+  --muted-foreground: hsl(220 5% 70%);
+  
+  /* Destructive */
+  --destructive: hsl(0 75% 50%);
   --destructive-foreground: hsl(0 0% 98%);
-  --border: hsl(240 3.7% 15.9%);
-  --input: hsl(240 3.7% 15.9%);
-  --ring: hsl(240 4.9% 83.9%);
+  
+  /* Border & Ring */
+  --border: hsl(220 13% 20%);
+  --ring: hsl(35 100% 55%);
+  
+  /* Shadows - more subtle in dark mode */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+  --shadow-hover: 0 20px 25px rgba(0, 0, 0, 0.6);
 }
 
 @theme inline {
@@ -103,9 +149,78 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border outline-ring/50 transition-colors duration-200;
   }
+  
+  html {
+    color-scheme: light dark;
+  }
+  
   body {
     @apply bg-background text-foreground antialiased;
+  }
+  
+  /* Smooth theme transitions */
+  html.dark,
+  html[data-theme="dark"] {
+    color-scheme: dark;
+  }
+  
+  /* Amazon-style focus styles */
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    @apply outline-2 outline-offset-2 outline-accent;
+  }
+  
+  /* Smooth scrollbar */
+  ::-webkit-scrollbar {
+    @apply w-2 h-2;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-muted;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-muted-foreground rounded-full hover:bg-foreground/50;
+  }
+  
+  /* Selection color */
+  ::selection {
+    @apply bg-accent text-accent-foreground;
+  }
+}
+
+@layer components {
+  /* Amazon-style card elevation */
+  .card-elevated {
+    @apply rounded-md shadow-md transition-all duration-200 hover:shadow-lg;
+  }
+  
+  /* CTA button styles */
+  .btn-cta {
+    @apply inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-semibold px-6 py-2.5 bg-accent text-accent-foreground hover:bg-accent/90 transition-all duration-200 active:scale-95;
+  }
+  
+  .btn-cta:hover {
+    @apply shadow-md;
+  }
+  
+  /* Secondary button */
+  .btn-secondary {
+    @apply inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium px-6 py-2.5 border-2 border-muted hover:bg-secondary/50 transition-all duration-200;
+  }
+  
+  /* Smooth theme toggle */
+  .theme-transition {
+    @apply transition-colors duration-300 ease-in-out;
+  }
+  
+  /* Grid responsive */
+  .grid-properties {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6;
   }
 }

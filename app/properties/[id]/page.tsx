@@ -7,7 +7,7 @@ import { Button } from '../../../components/ui/button';
 import { Skeleton } from '../../../components/ui/skeleton';
 import { Badge } from '../../../components/ui/badge';
 import Image from 'next/image';
-import { MapPin, BedDouble, Check, Calendar, ArrowLeft, Heart } from 'lucide-react';
+import { MapPin, BedDouble, Check, Calendar, ArrowLeft, Heart, Share2, Zap } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../lib/store';
 import { toggleWishlist } from '../../../features/wishlistSlice';
@@ -35,12 +35,12 @@ export default function PropertyDetailsPage() {
   if (loading) {
     return (
       <div className="max-w-7xl mx-auto w-full px-4 py-8">
-        <Skeleton className="h-[400px] w-full rounded-2xl mb-6" />
+        <Skeleton className="h-[400px] w-full rounded-lg mb-6" />
         <Skeleton className="h-10 w-1/3 mb-4" />
         <Skeleton className="h-6 w-1/4 mb-8" />
         <div className="flex gap-8">
-           <Skeleton className="h-[200px] flex-1 rounded-xl" />
-           <Skeleton className="h-[300px] w-[350px] rounded-xl" />
+           <Skeleton className="h-[200px] flex-1 rounded-lg" />
+           <Skeleton className="h-[300px] w-[350px] rounded-lg" />
         </div>
       </div>
     );
@@ -58,34 +58,39 @@ export default function PropertyDetailsPage() {
 
   return (
     <div className="max-w-7xl mx-auto w-full px-4 md:px-8 py-8 pb-32">
+      {/* Back Button */}
       <button 
         onClick={() => router.back()} 
-        className="flex items-center text-sm font-medium mb-4 hover:underline"
+        className="flex items-center text-sm font-semibold mb-6 text-accent hover:opacity-80 transition-opacity"
       >
-        <ArrowLeft className="w-4 h-4 mr-1" /> Back
+        <ArrowLeft className="w-4 h-4 mr-2" /> Back to listings
       </button>
 
       {/* Title & Header */}
-      <div className="flex justify-between items-start mb-6">
-        <div>
-          <h1 className="text-3xl md:text-4xl font-bold mb-2">{property.title}</h1>
-          <p className="flex items-center gap-1 text-muted-foreground">
-             <MapPin className="h-4 w-4" /> {property.location.name}
+      <div className="flex justify-between items-start mb-8">
+        <div className="flex-1">
+          <h1 className="text-4xl md:text-5xl font-bold mb-3">{property.title}</h1>
+          <p className="flex items-center gap-2 text-muted-foreground text-lg">
+             <MapPin className="h-5 w-5 text-accent" /> {property.location.name}
           </p>
         </div>
-        <div className="flex gap-3">
-           <button 
+        <div className="flex gap-2">
+           <Button 
+             variant="ghost" 
+             size="icon"
              onClick={() => dispatch(toggleWishlist(property.id))}
-             className="flex items-center gap-2 font-medium underline underline-offset-4 py-2 px-3 rounded hover:bg-muted transition"
+             className={`${isSaved ? 'text-destructive' : 'text-muted-foreground'} hover:scale-110 transition-transform`}
            >
-             <Heart className={`w-5 h-5 ${isSaved ? 'fill-destructive text-destructive' : ''}`} /> 
-             {isSaved ? 'Saved' : 'Save'}
-           </button>
+             <Heart className={`w-6 h-6 ${isSaved ? 'fill-current' : ''}`} />
+           </Button>
+           <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
+             <Share2 className="w-5 h-5" />
+           </Button>
         </div>
       </div>
 
       {/* Image Gallery */}
-      <div className="grid grid-cols-4 grid-rows-2 gap-2 h-[450px] md:h-[550px] rounded-2xl overflow-hidden mb-12">
+      <div className="grid grid-cols-4 grid-rows-2 gap-3 h-[450px] md:h-[550px] rounded-lg overflow-hidden mb-12 shadow-lg">
         <div className="col-span-4 md:col-span-2 row-span-2 relative h-full">
            <Image src={property.images[0]} alt="Main" fill className="object-cover hover:scale-105 transition-transform duration-500" />
         </div>
@@ -98,34 +103,52 @@ export default function PropertyDetailsPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
         {/* Left Column (Details) */}
-        <div className="lg:col-span-2 space-y-12">
+        <div className="lg:col-span-2 space-y-10">
           
-          <section className="flex flex-col gap-4 border-b pb-8">
-            <h2 className="text-2xl font-bold">Minimalist {property.type} Details</h2>
-            <div className="flex gap-4 items-center">
-              <Badge variant="secondary" className="px-3 py-1 font-medium capitalize">{property.type}</Badge>
-              <div className="flex items-center text-muted-foreground gap-1">
-                 <BedDouble className="h-4 w-4" /> {property.area} sqft
+          {/* Price & Key Details */}
+          <section className="bg-secondary/30 rounded-lg border border-border/50 p-8">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+              <div>
+                <span className="text-muted-foreground text-sm font-semibold uppercase tracking-wide">Total Price</span>
+                <div className="text-4xl font-bold text-accent mt-2">{formatter.format(property.price)}</div>
+              </div>
+              <div className="space-y-3">
+                <div className="flex items-center gap-3">
+                  <BedDouble className="h-5 w-5 text-accent" />
+                  <span className="font-medium">{property.area.toLocaleString()} sqft</span>
+                </div>
+                <Badge variant="default" className="w-fit capitalize">{property.type}</Badge>
               </div>
             </div>
-            <p className="text-lg leading-relaxed mt-4">{property.description}</p>
           </section>
 
+          {/* Description */}
+          <section>
+            <h2 className="text-2xl font-bold mb-4">About This Home</h2>
+            <p className="text-lg leading-relaxed text-foreground/90 mb-4">{property.description}</p>
+            <div className="bg-accent/10 border border-accent/20 rounded-lg p-4 flex items-start gap-3">
+              <Zap className="h-5 w-5 text-accent flex-shrink-0 mt-1" />
+              <p className="text-sm font-medium text-foreground">This property meets our high standards for modern, functional living.</p>
+            </div>
+          </section>
+
+          {/* Amenities */}
           <section className="border-b pb-8">
-             <h2 className="text-2xl font-bold mb-6">Functional Amenities</h2>
-             <div className="grid grid-cols-2 md:grid-cols-3 gap-y-4 gap-x-2">
+             <h2 className="text-2xl font-bold mb-6">Amenities & Features</h2>
+             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {property.amenities.map(a => (
-                  <div key={a} className="flex items-center gap-3">
-                     <Check className="h-5 w-5 text-primary" />
-                     <span className="font-medium text-foreground/90">{a}</span>
+                  <div key={a} className="flex items-center gap-3 bg-card rounded-lg p-4 border border-border/50 hover:border-accent/50 transition-colors">
+                     <Check className="h-5 w-5 text-accent flex-shrink-0" />
+                     <span className="font-medium text-foreground">{a}</span>
                   </div>
                 ))}
              </div>
           </section>
 
-          <section className="pb-8">
-             <h2 className="text-2xl font-bold mb-6">Location Map</h2>
-             <div className="h-[400px] w-full rounded-2xl overflow-hidden border">
+          {/* Location Map */}
+          <section>
+             <h2 className="text-2xl font-bold mb-6">Location</h2>
+             <div className="h-[400px] w-full rounded-lg overflow-hidden border border-border/50 shadow-md">
                 <MapView properties={[property]} />
              </div>
           </section>
@@ -134,53 +157,64 @@ export default function PropertyDetailsPage() {
 
         {/* Right Column (Sticky Booking Widget) */}
         <div>
-           <div className="sticky top-28 bg-card border rounded-2xl p-6 shadow-xl">
-              <div className="flex items-baseline gap-2 mb-4">
-                 <span className="text-3xl font-bold">{formatter.format(property.price)}</span>
-                 <span className="text-muted-foreground font-medium">total</span>
+           <div className="sticky top-28 bg-card border border-border/50 rounded-lg p-8 shadow-lg hover:shadow-xl transition-shadow">
+              
+              {/* Price Display */}
+              <div className="mb-6">
+                <span className="text-muted-foreground text-sm font-semibold">PRICE</span>
+                <div className="flex items-baseline gap-2 mt-1">
+                   <span className="text-4xl font-bold text-accent">{formatter.format(property.price)}</span>
+                </div>
               </div>
 
               {property.status === 'sold' ? (
-                <div className="bg-destructive/10 text-destructive font-bold p-4 rounded-xl text-center mb-6">
-                  This property is sold.
+                <div className="bg-destructive/10 border border-destructive/30 text-destructive font-bold p-4 rounded-lg text-center mb-6">
+                  ✓ This property has been sold
                 </div>
               ) : (
                 <>
-                  <div className="border rounded-xl mb-6 divide-y overflow-hidden">
-                     <div className="flex justify-between items-center p-4 bg-muted/30">
-                        <div>
-                          <div className="text-xs font-bold uppercase tracking-wider mb-1">Site Visit</div>
-                          <div className="text-muted-foreground">Select a date</div>
-                        </div>
-                        <Calendar className="h-5 w-5 text-muted-foreground" />
-                     </div>
+                  {/* Limited Stock Alert */}
+                  {property.leftInStock && (
+                    <div className="bg-accent/10 border border-accent/30 text-accent font-bold p-4 rounded-lg text-center mb-6 text-sm flex items-center justify-center gap-2">
+                      <span className="relative flex h-3 w-3">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-3 w-3 bg-accent"></span>
+                      </span>
+                      Only {property.leftInStock} left! Moving fast.
+                    </div>
+                  )}
+
+                  {/* Views Today */}
+                  {property.viewersToday && property.viewersToday > 0 && (
+                    <p className="text-center font-semibold text-sm text-accent mb-6 flex justify-center items-center gap-2">
+                      <span className="inline-block w-2 h-2 rounded-full bg-accent animate-pulse" />
+                      {property.viewersToday} people viewing now
+                    </p>
+                  )}
+
+                  {/* CTA Buttons */}
+                  <div className="space-y-3 mb-6">
+                    <Button size="lg" className="w-full bg-accent text-accent-foreground hover:bg-accent/90 font-bold text-base h-12 flex items-center justify-center gap-2 shadow-md hover:shadow-lg">
+                       <Calendar className="h-5 w-5" />
+                       Schedule Visit
+                    </Button>
+                    <Button size="lg" variant="outline" className="w-full font-bold border-2 border-border hover:border-accent/50">
+                       Contact Agent
+                    </Button>
                   </div>
 
-                  <Button size="lg" className="w-full font-bold text-lg h-14 mb-4">
-                     Schedule Visit
-                  </Button>
-                  <p className="text-center text-sm font-medium text-muted-foreground mb-6">
-                    You won't be charged yet
+                  <p className="text-center text-xs font-medium text-muted-foreground">
+                    You won't be charged until you visit
                   </p>
-
-                  {property.leftInStock && (
-                     <div className="bg-secondary/20 text-yellow-700 dark:text-yellow-500 font-bold p-4 rounded-xl text-center mb-6 text-sm flex items-center justify-center gap-2">
-                       <span className="relative flex h-3 w-3">
-                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
-                          <span className="relative inline-flex rounded-full h-3 w-3 bg-yellow-500"></span>
-                       </span>
-                       Only {property.leftInStock} left! Fast moving.
-                     </div>
-                  )}
-
-                  {property.viewersToday && property.viewersToday > 0 && (
-                     <p className="text-center font-medium text-sm flex justify-center items-center gap-2">
-                       <span className="inline-block w-2 w-2 rounded-full bg-primary" />
-                       {property.viewersToday} people are looking right now.
-                     </p>
-                  )}
                 </>
               )}
+
+              {/* Additional Info */}
+              <div className="mt-8 pt-6 border-t border-border/50 space-y-3 text-sm">
+                <p className="text-muted-foreground">✓ Verified listing</p>
+                <p className="text-muted-foreground">✓ Secure booking</p>
+                <p className="text-muted-foreground">✓ 24/7 support</p>
+              </div>
            </div>
         </div>
       </div>
